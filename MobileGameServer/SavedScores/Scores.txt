@@ -1,0 +1,2 @@
+1-{"Device":"mattia android","Points":100,"DeviceID":1,"EndPoint":null,"Date":"2017-07-18T20:15:51.0841556+02:00"}
+2-{"Device":"mattia android","Points":12,"DeviceID":2,"EndPoint":null,"Date":"2017-07-18T20:15:51.2195337+02:00"}

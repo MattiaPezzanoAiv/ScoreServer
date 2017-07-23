@@ -13,7 +13,7 @@ namespace MobileGameServer.Server
     {
         public string Device { get; set; }
         public long Points { get; set; }
-        public int DeviceID { get; set; }
+        public string DeviceID { get; set; }
         public EndPoint EndPoint { get; set; }
         public DateTime Date { get; set; }
         

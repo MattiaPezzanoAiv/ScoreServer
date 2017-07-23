@@ -29,19 +29,15 @@ namespace MobileGameServer.Server
             {
                 //response with json with best score of player
                 HttpListenerResponse response = context.Response;
-                int result = 0;
-                bool succes = int.TryParse(values[0], out result);
-                if (succes)
+
+                string outputJson = JsonConvert.SerializeObject(Server.GetScore(values[0]));
+                if (outputJson != null)
                 {
-                    string outputJson = JsonConvert.SerializeObject(Server.GetScore(result));
-                    if (outputJson != null)
-                    {
-                        byte[] data = Encoding.UTF8.GetBytes(outputJson);
-                        response.OutputStream.Write(data, 0, data.Length);
-                        response.OutputStream.Close();
-                        op.End();
-                        return true; //request satisfied
-                    }
+                    byte[] data = Encoding.UTF8.GetBytes(outputJson);
+                    response.OutputStream.Write(data, 0, data.Length);
+                    response.OutputStream.Close();
+                    op.End();
+                    return true; //request satisfied
                 }
             }
             return false;
@@ -59,7 +55,7 @@ namespace MobileGameServer.Server
                 bool succes = int.TryParse(values[0], out result);
                 if (succes)
                 {
-                    Dictionary<int, Score> bests = new Dictionary<int, Score>();
+                    Dictionary<string, Score> bests = new Dictionary<string, Score>();
                     foreach (var s in Server.Scores)
                     {
                         bests.Add(s.Key, s.Value);

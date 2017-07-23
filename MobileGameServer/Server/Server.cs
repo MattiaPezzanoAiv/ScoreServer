@@ -35,7 +35,7 @@ namespace MobileGameServer.Server
         /// <summary>
         /// The key represent the associated device id
         /// </summary>
-        private static Dictionary<int,Score> scores;
+        private static Dictionary<string,Score> scores;
 
         public static void AddScore(Score s)
         {
@@ -77,13 +77,13 @@ namespace MobileGameServer.Server
             }
             File.WriteAllLines(ScoresFilePath,allLines);
         }
-        public static Score GetScore(int deviceID)
+        public static Score GetScore(string deviceID)
         {
             if (scores.ContainsKey(deviceID))
                 return scores[deviceID];
             return null;
         }
-        public static Dictionary<int,Score> Scores
+        public static Dictionary<string,Score> Scores
         {
             get
             {
@@ -92,13 +92,13 @@ namespace MobileGameServer.Server
         }
         public static void Init()
         {
-            scores = new Dictionary<int, Score>();
+            scores = new Dictionary<string, Score>();
             asyncOperations = new List<AsyncOperation>();
 
             Score newScore = new Score();
             newScore.Date = DateTime.Now;
             newScore.Device = "mattia android";
-            newScore.DeviceID = 1;
+            newScore.DeviceID = "fb7a316abdea11556fcb35de77b602429139c8c5";
             newScore.EndPoint = null;
             newScore.Points = 100;
             AddScore(newScore);
@@ -106,7 +106,7 @@ namespace MobileGameServer.Server
             Score newScore2 = new Score();
             newScore2.Date = DateTime.Now;
             newScore2.Device = "mattia android";
-            newScore2.DeviceID = 2;
+            newScore2.DeviceID = "2";
             newScore2.EndPoint = null;
             newScore2.Points = 12;
             AddScore(newScore2);

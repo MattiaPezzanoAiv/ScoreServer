@@ -47,8 +47,17 @@ namespace MobileGameServer.Server
             {
                 HttpListenerContext context = task.Result;
                 HttpListenerRequest request = context.Request; //user request
-                //parse request
                 string query = request.Url.Query.Replace("?", "").Split('=')[0]; //get the first key
+
+
+                //is post request
+                if (request.HttpMethod =="POST")
+                {
+                    
+                }
+
+
+                //parse request
                 try
                 {
                     if (AsyncOperation.GETCalls[query](this, context, request))
@@ -60,27 +69,7 @@ namespace MobileGameServer.Server
                 {
                     Console.WriteLine("errore");
                 }
-                //string[] values = request.QueryString.GetValues("DeviceID");
                 
-                //if(values != null && values.Length > 0)
-                //{
-                //    //response with json with best score of player
-                //    HttpListenerResponse response = context.Response;
-                //    int result = 0;
-                //    bool succes = int.TryParse(values[0], out result);
-                //    if(succes)
-                //    {
-                //        string outputJson = JsonConvert.SerializeObject(Server.GetScore(result));
-                //        if (outputJson != null)
-                //        {
-                //            byte[] data = Encoding.UTF8.GetBytes(outputJson);
-                //            response.OutputStream.Write(data, 0, data.Length);
-                //            response.OutputStream.Close();
-                //            End();
-                //            return; //request satisfied
-                //        }
-                //    }
-                //}
 
                 //not an object request
                 string requestUrl = request.Url.Query.Replace("?", "").ToLower();

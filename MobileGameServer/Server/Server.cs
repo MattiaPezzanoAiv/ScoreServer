@@ -83,6 +83,26 @@ namespace MobileGameServer.Server
                 return scores[deviceID];
             return null;
         }
+        /// <summary>
+        /// Return true if score is overwritten
+        /// </summary>
+        /// <param name="deviceID"></param>
+        /// <param name="newScore"></param>
+        /// <returns></returns>
+        public static bool SetScore(string deviceID,Score newScore)
+        {
+            Score currentScore = GetScore(deviceID);
+            if(currentScore != null)
+            {
+                if(newScore.Points > currentScore.Points)
+                {
+                    //set new score
+                    scores[deviceID] = newScore;
+                    return true;
+                }
+            }
+            return false;
+        }
         public static Dictionary<string,Score> Scores
         {
             get

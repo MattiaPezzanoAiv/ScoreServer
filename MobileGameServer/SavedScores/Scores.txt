@@ -1,3 +1,3 @@
 1-{"Device":"mattia android","Points":100,"DeviceID":"1","EndPoint":null,"Date":"2017-07-23T21:18:51.9931598+02:00"}
-2-{"Device":"mattia android","Points":12,"DeviceID":"2","EndPoint":null,"Date":"2017-07-23T21:22:00.2503442+02:00"}
-fb7a316abdea11556fcb35de77b602429139c8c5-{"Device":"mattia android","Points":100,"DeviceID":"fb7a316abdea11556fcb35de77b602429139c8c5","EndPoint":null,"Date":"2017-07-23T21:22:00.088916+02:00"}
+2-{"Device":"mattia android","Points":12,"DeviceID":"2","EndPoint":null,"Date":"2017-07-23T21:39:41.3056489+02:00"}
+fb7a316abdea11556fcb35de77b602429139c8c5-{"Device":"mattia android","Points":100,"DeviceID":"fb7a316abdea11556fcb35de77b602429139c8c5","EndPoint":null,"Date":"2017-07-23T21:39:41.1427128+02:00"}

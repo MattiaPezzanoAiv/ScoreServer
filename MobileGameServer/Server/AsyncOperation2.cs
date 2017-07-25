@@ -11,14 +11,46 @@ namespace MobileGameServer.Server
     public sealed partial class AsyncOperation : IAsyncOperation
     {
         public delegate bool GET(AsyncOperation op, HttpListenerContext context, HttpListenerRequest request);
+        public delegate bool POST(AsyncOperation op, HttpListenerContext context, HttpListenerRequest request);
+
 
         public static Dictionary<string, GET> GETCalls;
+        public static Dictionary<string, POST> POSTCalls;
+
 
         static AsyncOperation()
         {
             GETCalls = new Dictionary<string, GET>();
             GETCalls.Add("DeviceID", Get_DeviceID);
             GETCalls.Add("Best", Get_Best);
+
+            POSTCalls = new Dictionary<string, POST>();
+            POSTCalls.Add("DeviceID", Post_DeviceID);
+        }
+
+        private static bool Post_DeviceID(AsyncOperation op, HttpListenerContext context, HttpListenerRequest request)
+        {
+            string[] values = request.QueryString.GetValues("DeviceID"); //get device id value
+            string[] scoreValues = request.QueryString.GetValues("Score"); //get score values
+
+            if (values != null && values.Length > 0)
+            {
+                HttpListenerResponse response = context.Response;
+                Score score = new Score();
+                score.Points = long.Parse(scoreValues[0]); //must be fixed with all score values
+                string outputJson = Server.SetScore(values[0], score).ToString(); //set score
+                if (outputJson != null)
+                {
+                    byte[] data = Encoding.UTF8.GetBytes(outputJson);
+                    response.OutputStream.Write(data, 0, data.Length);
+                    response.OutputStream.Close();
+                    op.End();
+                    Console.WriteLine("POST SUCCESFUL");
+                    return true; //request satisfied
+                }
+            }
+            Console.WriteLine("POST ABORTED");
+            return false;
         }
 
         private static bool Get_DeviceID(AsyncOperation op, HttpListenerContext context, HttpListenerRequest request)

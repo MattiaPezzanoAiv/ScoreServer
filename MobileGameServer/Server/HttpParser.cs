@@ -24,6 +24,7 @@ namespace MobileGameServer.Server
             parser.Add(ParserContext.GET, new Dictionary<string, ParseMethod>());
             //fill
             parser[ParserContext.GET].Add("sayhelloworld", Methods.SendHello);
+
             parser.Add(ParserContext.POST, new Dictionary<string, ParseMethod>());
             //fill
         }

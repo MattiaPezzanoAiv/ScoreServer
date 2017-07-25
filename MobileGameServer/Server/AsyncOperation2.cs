@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace MobileGameServer.Server
 {
@@ -30,24 +31,26 @@ namespace MobileGameServer.Server
 
         private static bool Post_DeviceID(AsyncOperation op, HttpListenerContext context, HttpListenerRequest request)
         {
-            string[] values = request.QueryString.GetValues("DeviceID"); //get device id value
-            string[] scoreValues = request.QueryString.GetValues("Score"); //get score values
-
-            if (values != null && values.Length > 0)
+            string[] parameters = new string[2];
+            using (StreamReader reader = new StreamReader(request.InputStream))
             {
-                HttpListenerResponse response = context.Response;
-                Score score = new Score();
-                score.Points = long.Parse(scoreValues[0]); //must be fixed with all score values
-                string outputJson = Server.SetScore(values[0], score).ToString(); //set score
-                if (outputJson != null)
-                {
-                    byte[] data = Encoding.UTF8.GetBytes(outputJson);
-                    response.OutputStream.Write(data, 0, data.Length);
-                    response.OutputStream.Close();
-                    op.End();
-                    Console.WriteLine("POST SUCCESFUL");
-                    return true; //request satisfied
-                }
+                string stringRequest = reader.ReadToEnd();
+                parameters = stringRequest.Split('&');
+            }
+
+
+            HttpListenerResponse response = context.Response;
+            Score score = new Score();
+            score.Points = long.Parse(parameters[1].Split('=')[1]); //must be fixed with all score values
+            string outputJson = Server.SetScore(parameters[0].Split('=')[1], score).ToString(); //set score
+            if (outputJson != null)
+            {
+                byte[] data = Encoding.UTF8.GetBytes(outputJson);
+                response.OutputStream.Write(data, 0, data.Length);
+                response.OutputStream.Close();
+                op.End();
+                Console.WriteLine("POST SUCCESFUL");
+                return true; //request satisfied
             }
             Console.WriteLine("POST ABORTED");
             return false;

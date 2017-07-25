@@ -8,6 +8,7 @@ using System.Net;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Web;
+using System.IO;
 
 namespace MobileGameServer.Server
 {
@@ -50,10 +51,11 @@ namespace MobileGameServer.Server
                 string query = request.Url.Query.Replace("?", "").Split('=')[0]; //get the first key
 
 
+
                 //is post request
-                if (request.HttpMethod =="POST")
+                if (request.HttpMethod == "POST")
                 {
-                    
+                    AsyncOperation.POSTCalls["DeviceID"](this, context, request);
                 }
 
 
@@ -69,7 +71,7 @@ namespace MobileGameServer.Server
                 {
                     Console.WriteLine("errore");
                 }
-                
+
 
                 //not an object request
                 string requestUrl = request.Url.Query.Replace("?", "").ToLower();
@@ -81,11 +83,11 @@ namespace MobileGameServer.Server
                     HttpListenerResponse response = context.Response;
                     response.OutputStream.Write(responseBuffer, 0, responseBuffer.Length);
                     response.OutputStream.Close();
-                    
+
                 }
                 catch (NullReferenceException e)
                 {
-                    Console.WriteLine("async op aborted, request does not supported "+requestUrl);
+                    Console.WriteLine("async op aborted, request does not supported " + requestUrl);
                     HttpListenerResponse response = context.Response;
                     responseBuffer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new ErrorJson("Request not supported")));
                     response.OutputStream.Write(responseBuffer, 0, responseBuffer.Length);

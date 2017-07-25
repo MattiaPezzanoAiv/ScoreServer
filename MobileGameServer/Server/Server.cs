@@ -18,7 +18,7 @@ namespace MobileGameServer.Server
 
     public static class Server
     {
-        private static List<AsyncOperation> asyncOperations;
+        public static List<AsyncOperation> asyncOperations;
 
         public static string Prefix { get { return "http://127.0.0.1:2000/"; } }
         public static string ScoresFilePath { get { return "../../SavedScores/Scores.txt"; } }

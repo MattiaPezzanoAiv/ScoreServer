@@ -55,7 +55,8 @@ namespace MobileGameServer.Server
                 //is post request
                 if (request.HttpMethod == "POST")
                 {
-                    AsyncOperation.POSTCalls["DeviceID"](this, context, request);
+                    if (AsyncOperation.POSTCalls["DeviceID"](this, context, request))
+                        return;
                 }
 
 
